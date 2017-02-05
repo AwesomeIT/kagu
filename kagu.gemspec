@@ -1,4 +1,4 @@
-require_relative 'lib/kagu/version'
+require './lib/kagu/version'
 
 Gem::Specification.new do |gem|
   gem.name    = 'kagu'

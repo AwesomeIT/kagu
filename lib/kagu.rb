@@ -3,7 +3,9 @@ require 'active_record'
 
 module Kagu
   extend ActiveSupport::Autoload
+
+  autoload :Bootstrap
   autoload :Models
 
-  VERSION = '0.0.1'
+  Bootstrap.bootstrap
 end

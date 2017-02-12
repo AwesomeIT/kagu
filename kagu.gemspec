@@ -15,8 +15,11 @@ Gem::Specification.new do |gem|
   gem.add_dependency('rake')
   gem.add_dependency('activerecord')
   gem.add_dependency('activesupport')
+  gem.add_dependency('devise')
+  gem.add_dependency('pg')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('pry')
+
 
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*'] & `git ls-files -z`.split("\0")

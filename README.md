@@ -12,3 +12,14 @@ ActiveRecord models and specs for the [turaco](https://github.com/birdfeed/turac
 ## Models
 
 To mimic Rails behaviors, we alias the constants from `Kagu::Models` into `Object` to avoid fully qualifying the path to our model. This is the exact same 'magic' done by Rails on load by `ActiveSupport`. 
+
+## Creating a Migration
+
+- Run `rake db:new_migration name=foo_bar_migration` and then edit the created file with your database changes.
+- Run `rake db:migrate` to apply the migration.
+- Create a model under `lib/kagu/models`
+- Create a spec under `spec/lib/models`
+- Update version number
+- Merge changes
+
+To retrieve the new changes, run `bundle update` in turaco and myna.

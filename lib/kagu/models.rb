@@ -3,6 +3,7 @@ module Kagu
     extend ActiveSupport::Autoload
 
     autoload :ApplicationRecord
-    autoload :Dummy
+    autoload :Install
+    autoload :User
   end
 end

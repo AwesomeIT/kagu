@@ -5,5 +5,8 @@ module Kagu
     autoload :ApplicationRecord
     autoload :Install
     autoload :User
+    autoload :Sample
+    autoload :Experiment
+    autoload :Score
   end
 end

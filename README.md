@@ -17,8 +17,9 @@ To mimic Rails behaviors, we alias the constants from `Kagu::Models` into `Objec
 
 - Run `rake db:new_migration name=foo_bar_migration` and then edit the created file with your database changes.
 - Run `rake db:migrate` to apply the migration.
-- Create a model under `lib/kagu/models`
-- Create a spec under `spec/lib/models`
+- If needed: create a model under `lib/kagu/models`
+- If needed: create a spec under `spec/lib/models`
+- If needed: update `models.rb`
 - Update version number
 - Merge changes
 

@@ -2,7 +2,7 @@ class ExperimentTable < ActiveRecord::Migration[5.0]
   def change
   	create_table :experiments do |t|
   		# id of creator
-      t.belongs_to	:user
+      t.belongs_to	:user,				index: true, 	foreign_key: true
       t.string 			:name, 				default: "",	null: false
       # number of times samples in the experiment can be repeated
       t.integer 		:repeats,			default: 0,		null: false

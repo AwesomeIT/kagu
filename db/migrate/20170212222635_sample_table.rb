@@ -2,7 +2,7 @@ class SampleTable < ActiveRecord::Migration[5.0]
   def change
   	create_table :samples do |t|
   		# id of creator
-      t.belongs_to	:user
+      t.belongs_to	:user,				index: true,	foreign_key: true
       t.string 			:name, 				default: "",	null: false
       t.string 			:s3_url, 			default: "",	null: false
       # labels for rating scale

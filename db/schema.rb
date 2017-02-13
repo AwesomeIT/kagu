@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170213002303) do
+ActiveRecord::Schema.define(version: 20170213003212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,16 @@ ActiveRecord::Schema.define(version: 20170213002303) do
     t.boolean "private"
     t.index ["s3_url"], name: "index_samples_on_s3_url", unique: true, using: :btree
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
+  end
+
+  create_table "scores", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "sample_id"
+    t.integer "experiment_id"
+    t.integer "rating",        default: 0, null: false
+    t.index ["experiment_id"], name: "index_scores_on_experiment_id", using: :btree
+    t.index ["sample_id"], name: "index_scores_on_sample_id", using: :btree
+    t.index ["user_id"], name: "index_scores_on_user_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|

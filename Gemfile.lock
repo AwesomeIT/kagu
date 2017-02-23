@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kagu (0.0.5)
+    kagu (0.0.7)
       activerecord
       activesupport
       devise
@@ -162,4 +162,4 @@ DEPENDENCIES
   standalone_migrations
 
 BUNDLED WITH
-   1.14.3
+   1.14.4

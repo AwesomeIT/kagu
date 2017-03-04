@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/kagu/version'
 
 Gem::Specification.new do |gem|
@@ -5,8 +6,8 @@ Gem::Specification.new do |gem|
   gem.version = Kagu::VERSION
   gem.date    = Date.today.to_s
 
-  gem.summary = "Models for Turaco and Myna"
-  gem.description = "ActiveRecord models and specifications for an API project with Kafka workers"
+  gem.summary = 'Models for Turaco and Myna'
+  gem.description = 'ActiveRecord models and specifications for an API project with Kafka workers'
 
   gem.authors  = ['David Stancu', 'Paulina Levit']
   gem.email    = 'dstancu@nyu.edu'
@@ -18,8 +19,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency('devise')
   gem.add_dependency('pg')
   gem.add_development_dependency('rspec')
+  gem.add_development_dependency('factory_girl')
   gem.add_development_dependency('pry')
-
 
   # ensure the gem is built out of versioned files
   gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*'] & `git ls-files -z`.split("\0")

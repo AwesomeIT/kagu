@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'devise'
 
 module Kagu
@@ -12,4 +13,3 @@ module Kagu
     end
   end
 end
-

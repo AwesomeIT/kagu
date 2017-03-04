@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'singleton'
 
 module Kagu
@@ -5,7 +6,7 @@ module Kagu
     include Singleton
 
     def self.bootstrap
-      self.instance.link_activerecord_models
+      instance.link_activerecord_models
     end
 
     def link_activerecord_models

@@ -23,4 +23,8 @@ To mimic Rails behaviors, we alias the constants from `Kagu::Models` into `Objec
 - Update version number
 - Merge changes
 
-To retrieve the new changes, run `bundle update` in turaco and myna.
+To retrieve the new changes, run `bundle update kagu` in turaco and myna.
+
+## Testing
+
+In order to avoid code replication, `FactoryGirl` factories are also included in this gem. Everything should work with any Ruby test framework as long as you `require kagu/factories` in your `spec_helper` or `test_helper` files. 

@@ -1,6 +1,6 @@
 # kagu
 [![CircleCI](https://circleci.com/gh/birdfeed/kagu.svg?style=shield)](https://circleci.com/gh/birdfeed/kagu)
-<a href="https://codeclimate.com/github/AwesomeIT/myna"><img src="https://codeclimate.com/github/AwesomeIT/myna/badges/gpa.svg" /></a>
+[![Code Climate](https://codeclimate.com/github/AwesomeIT/kagu/badges/gpa.svg)](https://codeclimate.com/github/AwesomeIT/kagu)
 
 ActiveRecord models and specs for the [turaco](https://github.com/birdfeed/turaco) API and [myna](https://github.com/birdfeed/myna) Kafka-backed workers.
 

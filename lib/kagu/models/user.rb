@@ -10,6 +10,10 @@ module Kagu
       # :confirmable, :lockable, :timeoutable and :omniauthable
       devise :database_authenticatable, :registerable,
              :recoverable, :rememberable, :trackable, :validatable
+
+      has_many :sample
+      has_many :experiment
+      has_many :score
     end
   end
 end

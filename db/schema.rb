@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326012052) do
+ActiveRecord::Schema.define(version: 20170326013934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,6 +107,13 @@ ActiveRecord::Schema.define(version: 20170326012052) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "experiments", "users"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "samples", "users"
+  add_foreign_key "samples_experiments", "experiments"
+  add_foreign_key "samples_experiments", "samples"
+  add_foreign_key "scores", "experiments"
+  add_foreign_key "scores", "samples"
+  add_foreign_key "scores", "users"
 end

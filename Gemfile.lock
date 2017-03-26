@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kagu (0.0.10)
+    kagu (0.0.11)
       activerecord
       activesupport
       devise
@@ -41,7 +41,7 @@ GEM
     builder (3.2.3)
     coderay (1.1.1)
     concurrent-ruby (1.0.4)
-    devise (4.2.0)
+    devise (4.2.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 5.1)
@@ -89,7 +89,7 @@ GEM
     orm_adapter (0.5.0)
     parser (2.3.3.1)
       ast (~> 2.2)
-    pg (0.19.0)
+    pg (0.20.0)
     powerpack (0.1.1)
     pry (0.10.4)
       coderay (~> 1.1.0)

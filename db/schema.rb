@@ -73,11 +73,11 @@ ActiveRecord::Schema.define(version: 20170326013934) do
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
   end
 
-  create_table "samples_experiments", force: :cascade do |t|
+  create_table "experiments_samples", force: :cascade do |t|
     t.integer "sample_id"
     t.integer "experiment_id"
-    t.index ["experiment_id"], name: "index_samples_experiments_on_experiment_id", using: :btree
-    t.index ["sample_id"], name: "index_samples_experiments_on_sample_id", using: :btree
+    t.index ["experiment_id"], name: "index_experiments_samples_on_experiment_id", using: :btree
+    t.index ["sample_id"], name: "index_experiments_samples_on_sample_id", using: :btree
   end
 
   create_table "scores", force: :cascade do |t|
@@ -111,8 +111,8 @@ ActiveRecord::Schema.define(version: 20170326013934) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "samples", "users"
-  add_foreign_key "samples_experiments", "experiments"
-  add_foreign_key "samples_experiments", "samples"
+  add_foreign_key "experiments_samples", "experiments"
+  add_foreign_key "experiments_samples", "samples"
   add_foreign_key "scores", "experiments"
   add_foreign_key "scores", "samples"
   add_foreign_key "scores", "users"

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kagu (0.0.11)
+    kagu (0.0.14)
       activerecord
       activesupport
       devise

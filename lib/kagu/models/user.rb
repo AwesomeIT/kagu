@@ -11,9 +11,9 @@ module Kagu
       devise :database_authenticatable, :registerable,
              :recoverable, :rememberable, :trackable, :validatable
 
-      has_many :sample
-      has_many :experiment
-      has_many :score
+      has_many :samples
+      has_many :experiments
+      has_many :scores
     end
   end
 end

@@ -10,8 +10,8 @@ class AddRoles < ActiveRecord::Migration[5.0]
     add_index :roles, :name, unique: true
 
     create_table :roles_users, id: false do |t|
-      t.belongs_to :roles, index: true
-      t.belongs_to :users, index: true
+      t.belongs_to :roles, index: true, foreign_key: true
+      t.belongs_to :users, index: true, foreign_key: true
     end
   end
 end

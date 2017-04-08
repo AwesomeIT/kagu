@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20170408181745) do
   add_foreign_key "experiments_samples", "samples"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "roles_users", "roles", column: "roles_id"
+  add_foreign_key "roles_users", "users", column: "users_id"
   add_foreign_key "samples", "users"
   add_foreign_key "scores", "experiments"
   add_foreign_key "scores", "samples"

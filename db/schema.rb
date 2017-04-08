@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170326013934) do
+ActiveRecord::Schema.define(version: 20170408181745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,13 @@ ActiveRecord::Schema.define(version: 20170326013934) do
     t.integer "repeats", default: 0,    null: false
     t.boolean "active",  default: true
     t.index ["user_id"], name: "index_experiments_on_user_id", using: :btree
+  end
+
+  create_table "experiments_samples", force: :cascade do |t|
+    t.integer "sample_id"
+    t.integer "experiment_id"
+    t.index ["experiment_id"], name: "index_experiments_samples_on_experiment_id", using: :btree
+    t.index ["sample_id"], name: "index_experiments_samples_on_sample_id", using: :btree
   end
 
   create_table "oauth_access_grants", force: :cascade do |t|
@@ -61,6 +68,21 @@ ActiveRecord::Schema.define(version: 20170326013934) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string   "name"
+    t.string   "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_roles_on_name", unique: true, using: :btree
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "roles_id"
+    t.integer "users_id"
+    t.index ["roles_id"], name: "index_roles_users_on_roles_id", using: :btree
+    t.index ["users_id"], name: "index_roles_users_on_users_id", using: :btree
+  end
+
   create_table "samples", force: :cascade do |t|
     t.integer "user_id"
     t.string  "name",       default: "", null: false
@@ -71,13 +93,6 @@ ActiveRecord::Schema.define(version: 20170326013934) do
     t.string  "hypothesis"
     t.index ["s3_url"], name: "index_samples_on_s3_url", unique: true, using: :btree
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
-  end
-
-  create_table "experiments_samples", force: :cascade do |t|
-    t.integer "sample_id"
-    t.integer "experiment_id"
-    t.index ["experiment_id"], name: "index_experiments_samples_on_experiment_id", using: :btree
-    t.index ["sample_id"], name: "index_experiments_samples_on_sample_id", using: :btree
   end
 
   create_table "scores", force: :cascade do |t|
@@ -108,11 +123,11 @@ ActiveRecord::Schema.define(version: 20170326013934) do
   end
 
   add_foreign_key "experiments", "users"
+  add_foreign_key "experiments_samples", "experiments"
+  add_foreign_key "experiments_samples", "samples"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "samples", "users"
-  add_foreign_key "experiments_samples", "experiments"
-  add_foreign_key "experiments_samples", "samples"
   add_foreign_key "scores", "experiments"
   add_foreign_key "scores", "samples"
   add_foreign_key "scores", "users"

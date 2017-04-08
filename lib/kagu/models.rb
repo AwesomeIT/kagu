@@ -4,9 +4,10 @@ module Kagu
     extend ActiveSupport::Autoload
 
     autoload :ApplicationRecord
-    autoload :User
-    autoload :Sample
     autoload :Experiment
+    autoload :Role
+    autoload :Sample
     autoload :Score
+    autoload :User
   end
 end

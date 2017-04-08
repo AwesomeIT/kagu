@@ -11,11 +11,13 @@ module Kagu
       devise :database_authenticatable, :registerable,
              :recoverable, :rememberable, :trackable, :validatable
 
-      has_many :samples
-      has_many :experiments
-      has_many :scores
-      #the access token model is a part of doorkeeper
+      # The access token model is a part of Doorkeeper
       has_many :access_tokens
+      has_many :experiments
+      has_many :samples
+      has_many :scores
+
+      has_and_belongs_to_many :roles
     end
   end
 end

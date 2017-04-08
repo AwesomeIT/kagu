@@ -14,6 +14,8 @@ module Kagu
       has_many :samples
       has_many :experiments
       has_many :scores
+      #the access token model is a part of doorkeeper
+      has_many :access_tokens
     end
   end
 end

@@ -77,10 +77,10 @@ ActiveRecord::Schema.define(version: 20170408181745) do
   end
 
   create_table "roles_users", id: false, force: :cascade do |t|
-    t.integer "roles_id"
-    t.integer "users_id"
-    t.index ["roles_id"], name: "index_roles_users_on_roles_id", using: :btree
-    t.index ["users_id"], name: "index_roles_users_on_users_id", using: :btree
+    t.integer "role_id"
+    t.integer "user_id"
+    t.index ["role_id"], name: "index_roles_users_on_role_id", using: :btree
+    t.index ["user_id"], name: "index_roles_users_on_user_id", using: :btree
   end
 
   create_table "samples", force: :cascade do |t|
@@ -127,8 +127,8 @@ ActiveRecord::Schema.define(version: 20170408181745) do
   add_foreign_key "experiments_samples", "samples"
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
-  add_foreign_key "roles_users", "roles", column: "roles_id"
-  add_foreign_key "roles_users", "users", column: "users_id"
+  add_foreign_key "roles_users", "roles"
+  add_foreign_key "roles_users", "users"
   add_foreign_key "samples", "users"
   add_foreign_key "scores", "experiments"
   add_foreign_key "scores", "samples"

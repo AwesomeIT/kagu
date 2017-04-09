@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 module Kagu
-  VERSION = '0.0.17'
+  VERSION = '0.0.18'
 end

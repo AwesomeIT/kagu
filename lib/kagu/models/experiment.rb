@@ -2,7 +2,6 @@
 module Kagu
   module Models
     class Experiment < ApplicationRecord
-      include Elasticsearch::Model
       include Concerns::Taggable
 
       belongs_to :user

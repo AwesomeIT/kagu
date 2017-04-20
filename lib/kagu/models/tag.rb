@@ -6,7 +6,7 @@ module Kagu
 
       class << self
         def taggable_kinds
-          @taggable_kinds ||= []
+          @taggable_kinds ||= {}
         end
       end
 

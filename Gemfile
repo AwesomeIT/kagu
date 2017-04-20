@@ -10,4 +10,6 @@ group :development do
   gem 'guard'
   gem 'guard-rspec', require: false
   gem 'guard-rubocop'
+  gem 'pry', require: true
+  gem 'pry-byebug', require: true
 end

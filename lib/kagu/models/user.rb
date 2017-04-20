@@ -5,7 +5,6 @@ module Kagu
   module Models
     class User < ApplicationRecord
       extend Devise::Models
-      include Elasticsearch::Model
       include Concerns::Taggable
 
       # Include default devise modules. Others available are:

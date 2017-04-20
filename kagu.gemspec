@@ -14,12 +14,12 @@ Gem::Specification.new do |gem|
   gem.email    = 'dstancu@nyu.edu'
   gem.homepage = 'http://github.com/birdfeed/kagu'
 
-  gem.add_dependency('rake')
   gem.add_dependency('activerecord')
-  gem.add_dependency('elasticsearch-model')
   gem.add_dependency('activesupport')
   gem.add_dependency('devise')
+  gem.add_dependency('elasticsearch-model')
   gem.add_dependency('pg')
+  gem.add_dependency('rake')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('factory_girl')
   gem.add_development_dependency('pry')

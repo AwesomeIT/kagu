@@ -4,15 +4,53 @@ module Kagu
     module Taggable
       extend ActiveSupport::Concern
 
+      NGRAM_SETTINGS = { analysis: {
+        filter: {
+          edge_ngram_filter: {
+            type: "edgeNGram",
+            min_gram: "2",
+            max_gram: "10",
+            token_chars: %w(letter digit symbol)
+          }
+        },
+        analyzer: {
+          edge_ngram_analyzer: {
+            type: "custom",
+            tokenizer: "standard",
+            filter: ["lowercase", "edge_ngram_filter"]
+          }
+        }
+      }}
+
+      TAG_QUERY = lambda do |tag_string|
+        {
+          query: {
+            match: {
+              tags: {
+                query: tag_string
+              }
+            }
+          }
+        }
+      end
+
       included do |other|
         relation_name =
           other.name.demodulize.underscore.pluralize.to_sym
 
-        Models::Tag.taggable_kinds << relation_name
+        Models::Tag.taggable_kinds[relation_name] = other
 
         other.class_eval do
+          include Elasticsearch::Model
+
           has_many :tags, as: :kindable, through: :tag_mappings
           has_many :tag_mappings, as: :kindable
+
+          settings NGRAM_SETTINGS do
+            mappings dynamic: 'false' do 
+              indexes :tags, type: 'string', analyzer: 'edge_ngram_analyzer'
+            end
+          end
         end
 
         Models::Tag.class_eval do
@@ -20,6 +58,16 @@ module Kagu
                    through: :tag_mappings,
                    source: :kindable,
                    source_type: other
+        end
+      end
+
+      def as_indexed_json(options = {})
+        as_json.merge(tags: tags.pluck(:name))
+      end
+
+      class_methods do 
+        def by_tags(tag_string)
+          search(TAG_QUERY.(tag_string)).records
         end
       end
     end

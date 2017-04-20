@@ -3,6 +3,7 @@ module Kagu
   module Models
     class Sample < ApplicationRecord
       include Elasticsearch::Model
+      include Concerns::Taggable
 
       belongs_to :user
       has_many :scores

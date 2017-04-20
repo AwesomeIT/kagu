@@ -6,6 +6,8 @@ class AddTags < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
+    add_index :tags, :name, unique: true
+
     create_table :tag_mappings do |t|
       t.references :kindable, polymorphic: true, index: true
     end

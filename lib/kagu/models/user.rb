@@ -6,6 +6,7 @@ module Kagu
     class User < ApplicationRecord
       extend Devise::Models
       include Elasticsearch::Model
+      include Concerns::Taggable
 
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable and :omniauthable

@@ -6,6 +6,7 @@ require 'pry'
 module Kagu
   extend ActiveSupport::Autoload
   autoload :Bootstrap
+  autoload :Concerns
   autoload :Models
 
   def self.root

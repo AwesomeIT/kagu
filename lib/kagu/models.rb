@@ -11,6 +11,7 @@ module Kagu
     autoload :Sample
     autoload :Score
     autoload :Tag
+    autoload :TagMapping
     autoload :User
   end
 end

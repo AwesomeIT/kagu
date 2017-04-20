@@ -2,7 +2,14 @@
 module Kagu
   module Models
     class Tag < ApplicationRecord
-      belongs_to :kindable, polymorphic: true
+      has_many :tag_mappings
+
+      class << self
+        def taggable_kinds
+          @taggable_kinds ||= []
+        end
+      end
+
       alias_attribute :tagged, :kindable
     end
   end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require './lib/kagu/version'
+require 'date'
 
 Gem::Specification.new do |gem|
   gem.name    = 'kagu'

@@ -6,7 +6,7 @@ module Kagu
 
       belongs_to :user
       has_many :scores
-      has_many :tags, polymorphic: true
+      has_many :tags, as: :kindable
       has_and_belongs_to_many :samples
     end
   end

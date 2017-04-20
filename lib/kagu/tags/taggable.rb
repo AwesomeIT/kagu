@@ -32,12 +32,6 @@ module Kagu
       def as_indexed_json(_options = {})
         as_json.merge(tags: tags.pluck(:name))
       end
-
-      class_methods do
-        def by_tags(tag_string)
-          search(Tags::TAG_QUERY.call(tag_string)).records
-        end
-      end
     end
   end
 end

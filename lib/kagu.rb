@@ -6,8 +6,8 @@ require 'pry'
 module Kagu
   extend ActiveSupport::Autoload
   autoload :Bootstrap
-  autoload :Concerns
   autoload :Models
+  autoload :Tags
 
   def self.root
     File.dirname __dir__

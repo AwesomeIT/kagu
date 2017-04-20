@@ -5,7 +5,7 @@ module Kagu
   module Models
     class User < ApplicationRecord
       extend Devise::Models
-      include Concerns::Taggable
+      include Tags::Taggable
 
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable and :omniauthable

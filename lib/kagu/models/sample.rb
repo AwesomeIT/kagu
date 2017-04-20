@@ -2,7 +2,7 @@
 module Kagu
   module Models
     class Sample < ApplicationRecord
-      include Concerns::Taggable
+      include Tags::Taggable
 
       belongs_to :user
       has_many :scores

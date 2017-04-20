@@ -15,6 +15,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency('rake', '~> 10.0')
   gem.add_dependency('activerecord')
+  gem.add_dependency('elasticsearch-model')
   gem.add_dependency('activesupport')
   gem.add_dependency('devise')
   gem.add_dependency('pg')

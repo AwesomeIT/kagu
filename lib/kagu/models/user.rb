@@ -5,6 +5,7 @@ module Kagu
   module Models
     class User < ApplicationRecord
       extend Devise::Models
+      include Elasticsearch::Model
 
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -18,6 +19,7 @@ module Kagu
       has_many :experiments
       has_many :samples
       has_many :scores
+      has_many :tags, polymorphic: true
 
       has_and_belongs_to_many :roles
 

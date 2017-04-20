@@ -7,9 +7,9 @@ class AddTags < ActiveRecord::Migration[5.0]
     end
 
     create_table :tag_mappings do |t|
-      t.string :kind
+      t.references :kindable, polymorphic: true, index: true
     end
-    
+
     add_reference :tag_mappings, :tag, foreign_key: true
   end
 end

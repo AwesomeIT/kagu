@@ -8,6 +8,7 @@ module Kagu
     autoload :Role
     autoload :Sample
     autoload :Score
+    autoload :Tag
     autoload :User
   end
 end

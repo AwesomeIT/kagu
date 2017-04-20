@@ -108,8 +108,10 @@ ActiveRecord::Schema.define(version: 20170420011307) do
   end
 
   create_table "tag_mappings", force: :cascade do |t|
-    t.string  "kind"
+    t.string  "kindable_type"
+    t.integer "kindable_id"
     t.integer "tag_id"
+    t.index ["kindable_type", "kindable_id"], name: "index_tag_mappings_on_kindable_type_and_kindable_id", using: :btree
     t.index ["tag_id"], name: "index_tag_mappings_on_tag_id", using: :btree
   end
 

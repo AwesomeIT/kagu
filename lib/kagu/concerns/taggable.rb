@@ -1,10 +1,11 @@
+# frozen_string_literal: true
 module Kagu
   module Concerns
     module Taggable
       extend ActiveSupport::Concern
 
       included do |other|
-        relation_name = 
+        relation_name =
           other.name.demodulize.underscore.pluralize.to_sym
 
         Models::Tag.taggable_kinds << relation_name
@@ -15,10 +16,10 @@ module Kagu
         end
 
         Models::Tag.class_eval do
-          has_many relation_name, 
-            through: :tag_mappings,
-            source: :kindable,
-            source_type: other 
+          has_many relation_name,
+                   through: :tag_mappings,
+                   source: :kindable,
+                   source_type: other
         end
       end
     end

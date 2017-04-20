@@ -10,7 +10,7 @@ describe 'Factories' do
     end
 
     it 'should have all of the factories that are defined' do
-      expect(FactoryGirl.factories.map(&:name)).to match(factories_defined)
+      expect(FactoryGirl.factories.map(&:name)).to include(*factories_defined)
     end
   end
 end

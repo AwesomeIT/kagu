@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
   gem.email    = 'dstancu@nyu.edu'
   gem.homepage = 'http://github.com/birdfeed/kagu'
 
-  gem.add_dependency('rake', '~> 10.0')
+  gem.add_dependency('rake')
   gem.add_dependency('activerecord')
   gem.add_dependency('elasticsearch-model')
   gem.add_dependency('activesupport')

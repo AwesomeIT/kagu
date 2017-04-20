@@ -3,6 +3,8 @@ module Kagu
   module Tags
     extend ActiveSupport::Autoload
 
+    # elasticsearch-model does not like immutable Hashes
+    # rubocop:disable Style/MutableConstant
     NGRAM_SETTINGS = { analysis: {
       filter: {
         edge_ngram_filter: {
@@ -20,17 +22,12 @@ module Kagu
         }
       }
     } }
+    # rubocop:enable Style/MutableConstant
 
     TAG_QUERY = lambda do |tag_string|
-      {
-        query: {
-          match: {
-            tags: {
-              query: tag_string
-            }
-          }
-        }
-      }
+      { query: { match: { tags: {
+        query: tag_string
+      } } } }
     end
 
     autoload :RelationExtensions

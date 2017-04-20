@@ -7,20 +7,20 @@ module Kagu
       NGRAM_SETTINGS = { analysis: {
         filter: {
           edge_ngram_filter: {
-            type: "edgeNGram",
-            min_gram: "2",
-            max_gram: "10",
+            type: 'edgeNGram',
+            min_gram: '2',
+            max_gram: '10',
             token_chars: %w(letter digit symbol)
           }
         },
         analyzer: {
           edge_ngram_analyzer: {
-            type: "custom",
-            tokenizer: "standard",
-            filter: ["lowercase", "edge_ngram_filter"]
+            type: 'custom',
+            tokenizer: 'standard',
+            filter: %w(lowercase edge_ngram_filter)
           }
         }
-      }}
+      } }
 
       TAG_QUERY = lambda do |tag_string|
         {
@@ -43,11 +43,20 @@ module Kagu
         other.class_eval do
           include Elasticsearch::Model
 
-          has_many :tags, as: :kindable, through: :tag_mappings
+          has_many :tags, as: :kindable, through: :tag_mappings do
+            def <<(records)
+              super(Array.wrap(records).inject([]) do |m, t|
+                tag = Tag.find_or_create_by(name: t.downcase.strip)
+                next m if include?(tag)
+                m << tag
+              end)
+            end
+          end
+
           has_many :tag_mappings, as: :kindable
 
           settings NGRAM_SETTINGS do
-            mappings dynamic: 'false' do 
+            mappings dynamic: 'false' do
               indexes :tags, type: 'string', analyzer: 'edge_ngram_analyzer'
             end
           end
@@ -61,13 +70,13 @@ module Kagu
         end
       end
 
-      def as_indexed_json(options = {})
+      def as_indexed_json(_options = {})
         as_json.merge(tags: tags.pluck(:name))
       end
 
-      class_methods do 
+      class_methods do
         def by_tags(tag_string)
-          search(TAG_QUERY.(tag_string)).records
+          search(TAG_QUERY.call(tag_string)).records
         end
       end
     end

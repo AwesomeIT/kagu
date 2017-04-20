@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 20170420011307) do
     t.integer "kindable_id"
     t.integer "tag_id"
     t.index ["kindable_type", "kindable_id"], name: "index_tag_mappings_on_kindable_type_and_kindable_id", using: :btree
+    t.index ["kindable_type", "tag_id"], name: "index_tag_mappings_on_kindable_type_and_tag_id", unique: true, using: :btree
     t.index ["tag_id"], name: "index_tag_mappings_on_tag_id", using: :btree
   end
 

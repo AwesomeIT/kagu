@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require './lib/kagu/version'
+require 'date'
 
 Gem::Specification.new do |gem|
   gem.name    = 'kagu'
@@ -13,11 +14,12 @@ Gem::Specification.new do |gem|
   gem.email    = 'dstancu@nyu.edu'
   gem.homepage = 'http://github.com/birdfeed/kagu'
 
-  gem.add_dependency('rake', '~> 10.0')
   gem.add_dependency('activerecord')
   gem.add_dependency('activesupport')
   gem.add_dependency('devise')
+  gem.add_dependency('elasticsearch-model')
   gem.add_dependency('pg')
+  gem.add_dependency('rake')
   gem.add_development_dependency('rspec')
   gem.add_development_dependency('factory_girl')
   gem.add_development_dependency('pry')

@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+require 'elasticsearch/model'
+
 module Kagu
   module Models
     extend ActiveSupport::Autoload
@@ -8,6 +10,8 @@ module Kagu
     autoload :Role
     autoload :Sample
     autoload :Score
+    autoload :Tag
+    autoload :TagMapping
     autoload :User
   end
 end

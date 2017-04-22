@@ -7,6 +7,7 @@ module Kagu
   extend ActiveSupport::Autoload
   autoload :Bootstrap
   autoload :Models
+  autoload :Tags
 
   def self.root
     File.dirname __dir__

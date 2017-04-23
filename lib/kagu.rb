@@ -2,7 +2,6 @@
 require 'active_support'
 require 'active_record'
 require 'elasticsearch/model'
-require 'pry'
 
 module Kagu
   extend ActiveSupport::Autoload

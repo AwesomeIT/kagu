@@ -5,13 +5,37 @@ RSpec.describe Kagu::Bootstrap do
   context 'top level definitions' do
     before { described_class.bootstrap }
 
-    it 'should class alias all top level models' do
-      expect(Object.constants).to include(*Kagu::Models.constants)
+    context '#link_activerecord_models' do 
+      it 'should class alias all top level models' do
+        expect(Object.constants).to include(*Kagu::Models.constants)
+      end
+
+      it 'should have class types' do
+        expect { Kagu::Models.constants.map { |c| c.to_s.constantize } }
+          .to_not raise_error
+      end
+    end
+  end
+
+  context '#configure_elasticsearch_client' do
+    let(:url) { 'foo.com' }
+    before { ENV['ELASTICSEARCH_URL'] = url }
+
+    it 'should use the environment variable if present' do
+      expect(::Elasticsearch::Client)
+        .to receive(:new).with(host: url, log: true)
+
+      described_class.bootstrap
     end
 
-    it 'should have class types' do
-      expect { Kagu::Models.constants.map { |c| c.to_s.constantize } }
-        .to_not raise_error
+    context 'with no env var' do 
+      let(:url) { nil }
+
+      it 'should use localhost otherwise' do
+        expect(::Elasticsearch::Client)
+          .to receive(:new).with(host: 'localhost:9200', log: true)
+        described_class.bootstrap
+      end
     end
   end
 end

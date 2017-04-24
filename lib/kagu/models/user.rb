@@ -19,18 +19,15 @@ module Kagu
       has_many :experiments
       has_many :samples
       has_many :scores
-      has_many :tags, as: :kindable
 
       has_and_belongs_to_many :roles
 
       # TODO: rename
       # rubocop:disable Style/PredicateName
-      # rubocop:disable Style/DoubleNegation
       def has_role?(name)
-        !!roles.find_by('lower(name) = ?', name.downcase)
+        !roles.find_by('lower(name) = ?', name.downcase).nil?
       end
       # rubocop:enable Style/PredicateName
-      # rubocop:enable Style/DoubleNegation
     end
   end
 end

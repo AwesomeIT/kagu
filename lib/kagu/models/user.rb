@@ -19,7 +19,6 @@ module Kagu
       has_many :experiments
       has_many :samples
       has_many :scores
-      has_many :tags, as: :kindable
 
       has_and_belongs_to_many :roles
 

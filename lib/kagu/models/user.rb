@@ -24,12 +24,10 @@ module Kagu
 
       # TODO: rename
       # rubocop:disable Style/PredicateName
-      # rubocop:disable Style/DoubleNegation
       def has_role?(name)
-        !!roles.find_by('lower(name) = ?', name.downcase)
+        !(roles.find_by('lower(name) = ?', name.downcase)).nil?
       end
       # rubocop:enable Style/PredicateName
-      # rubocop:enable Style/DoubleNegation
     end
   end
 end

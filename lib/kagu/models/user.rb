@@ -25,7 +25,7 @@ module Kagu
       # TODO: rename
       # rubocop:disable Style/PredicateName
       def has_role?(name)
-        !(roles.find_by('lower(name) = ?', name.downcase)).nil?
+        !roles.find_by('lower(name) = ?', name.downcase).nil?
       end
       # rubocop:enable Style/PredicateName
     end

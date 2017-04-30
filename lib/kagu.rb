@@ -8,6 +8,7 @@ module Kagu
   autoload :Bootstrap
   autoload :Models
   autoload :Tags
+  autoload :Query
 
   def self.root
     File.dirname __dir__

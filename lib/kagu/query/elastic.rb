@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Kagu
   module Query
     class Elastic
@@ -18,9 +19,9 @@ module Kagu
         return klass if query.blank? || !query_map.keys.include?(
           *query.keys.map(&:to_s)
         )
-        
+
         query.map { |q, a| klass.search(query_map[q].call(a)).records }
-          .reduce(:merge)
+             .reduce(:merge)
       end
 
       private

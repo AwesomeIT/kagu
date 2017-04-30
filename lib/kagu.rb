@@ -5,6 +5,8 @@ require 'elasticsearch/model'
 
 module Kagu
   extend ActiveSupport::Autoload
+
+  autoload :Adapters
   autoload :Bootstrap
   autoload :Models
   autoload :Tags

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 module Kagu
-  module Concerns
+  module Adapters
     extend ActiveSupport::Autoload
 
-    autoload :Taggable
+    autoload :S3
   end
 end

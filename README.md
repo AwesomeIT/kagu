@@ -1,13 +1,18 @@
 # kagu
-[![CircleCI](https://circleci.com/gh/birdfeed/kagu.svg?style=shield)](https://circleci.com/gh/birdfeed/kagu)
+![CircleCI](https://circleci.com/gh/AwesomeIT/kagu.svg?style=shield&circle-token=3420189707d859bb6fcd91a354a6ffcea697e1ff)
 [![Code Climate](https://codeclimate.com/github/AwesomeIT/kagu/badges/gpa.svg)](https://codeclimate.com/github/AwesomeIT/kagu)
 
-ActiveRecord models and specs for the [turaco](https://github.com/birdfeed/turaco) API and [myna](https://github.com/birdfeed/myna) Kafka-backed workers.
+Standard library of models and utilities for the [turaco](https://github.com/birdfeed/turaco) API and [myna](https://github.com/birdfeed/myna) Kafka-backed workers.
 
 ## Overview
 
-- `Kagu::Models` contains ActiveRecord models.
-- `Kagu::Documents` contains ElasticSearch repository objects (TBD).
+| Namespace       | Purpose                                                                      |
+|-----------------|------------------------------------------------------------------------------|
+| Kagu::Adapters  | Connection adapters for third party services, e.g. AWS S3.                   |
+| Kagu::Factories | FactoryGirl factories used in test environments. Not eager loaded!           |
+| Kagu::Models    | ActiveRecord models / persistence.                                           |
+| Kagu::Query     | Query-oriented service objects (e.g. stuff you shouldn't put in your model). |
+| Kagu::Tags      | Support for taggable models                                                  |
 
 ## Models
 

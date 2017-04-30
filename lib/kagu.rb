@@ -5,13 +5,17 @@ require 'elasticsearch/model'
 
 module Kagu
   extend ActiveSupport::Autoload
+
+  autoload :Adapters
   autoload :Bootstrap
   autoload :Models
   autoload :Tags
   autoload :Query
 
-  def self.root
-    File.dirname __dir__
+  class << self
+    def root
+      File.dirname __dir__
+    end
   end
 
   Bootstrap.bootstrap

@@ -22,7 +22,7 @@ module Kagu
         obj.public_url
       end
 
-      private 
+      private
 
       def bucket
         @bucket ||= resource.bucket(ENV['AWS_S3_BUCKET_NAME'])

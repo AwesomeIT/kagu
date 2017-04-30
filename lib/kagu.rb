@@ -12,8 +12,10 @@ module Kagu
   autoload :Tags
   autoload :Query
 
-  def self.root
-    File.dirname __dir__
+  class << self
+    def root
+      File.dirname __dir__
+    end
   end
 
   Bootstrap.bootstrap

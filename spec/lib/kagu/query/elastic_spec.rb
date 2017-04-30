@@ -36,7 +36,7 @@ describe Kagu::Query::Elastic do
 
     it 'sets the last query' do
       subject.search(query)
-      expect(subject.last_query).to eql(query) 
+      expect(subject.last_query).to match(query) 
     end
   end
 end

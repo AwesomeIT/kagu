@@ -5,6 +5,8 @@ module Kagu
 
     autoload :ApplicationRecord
     autoload :Experiment
+    autoload :Organization
+    autoload :OrganizationMapping
     autoload :Role
     autoload :Sample
     autoload :Score

@@ -22,6 +22,9 @@ module Kagu
 
       has_and_belongs_to_many :roles
 
+      has_many :organization_mappings, as: :kindable
+      has_many :organizations, through: :organization_mappings
+
       # TODO: rename
       # rubocop:disable Style/PredicateName
       def has_role?(name)

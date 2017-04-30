@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170424002252) do
+ActiveRecord::Schema.define(version: 20170430000130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,22 @@ ActiveRecord::Schema.define(version: 20170424002252) do
     t.index ["user_id"], name: "index_oauth_applications_on_user_id", using: :btree
   end
 
+  create_table "organization_mappings", force: :cascade do |t|
+    t.string  "kindable_type"
+    t.integer "kindable_id"
+    t.integer "organization_id"
+    t.index ["kindable_id", "kindable_type"], name: "index_organization_mappings_on_kindable_id_and_kindable_type", using: :btree
+    t.index ["kindable_type", "kindable_id"], name: "index_organization_mappings_on_kindable_type_and_kindable_id", using: :btree
+    t.index ["organization_id"], name: "index_organization_mappings_on_organization_id", using: :btree
+  end
+
+  create_table "organizations", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_organizations_on_name", unique: true, using: :btree
+  end
+
   create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.string   "description"
@@ -91,7 +107,6 @@ ActiveRecord::Schema.define(version: 20170424002252) do
     t.string  "s3_url",     default: "", null: false
     t.string  "low_label"
     t.string  "high_label"
-    t.boolean "private"
     t.string  "hypothesis"
     t.index ["s3_url"], name: "index_samples_on_s3_url", unique: true, using: :btree
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
@@ -147,6 +162,7 @@ ActiveRecord::Schema.define(version: 20170424002252) do
   add_foreign_key "oauth_access_grants", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_applications", "users"
+  add_foreign_key "organization_mappings", "organizations"
   add_foreign_key "roles_users", "roles"
   add_foreign_key "roles_users", "users"
   add_foreign_key "samples", "users"

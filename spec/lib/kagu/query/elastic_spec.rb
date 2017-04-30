@@ -11,34 +11,28 @@ describe Kagu::Query::Elastic do
   end
 
   context '#search' do
-    subject { described_class.new(klass) }
-
-    let!(:klass) do
+    let(:klass) do
       Class.new do
-        def self.by_tags(_)
-          OpenStruct.new(records: Experiment.all)
-        end
-
-        def self.by_name(_)
+        def self.search(_)
           OpenStruct.new(records: Experiment.all)
         end
       end
     end
 
-    let(:query) { { by_tags: 'a', by_name: 'b' } }
+    let(:query) { { tags: 'a' } }
+    
+    subject { described_class.new(klass) }
 
     it 'invokes the correct search methods' do
-      expect(klass).to receive(:by_tags).with('a').and_call_original
-      expect(klass).to receive(:by_name).with('b').and_call_original
-
+      expect(klass).to receive(:search).and_call_original
       subject.search(query)
     end
 
-    it 'merges the relations' do
-      expect_any_instance_of(ActiveRecord::Relation)
-        .to receive(:merge).and_call_original
-      subject.search(query) 
-    end
+    # it 'merges the relations' do
+    #   expect_any_instance_of(ActiveRecord::Relation)
+    #     .to receive(:merge).and_call_original
+    #   subject.search(query) 
+    # end
 
     it 'sets the last query' do
       subject.search(query)

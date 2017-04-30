@@ -15,9 +15,20 @@ module Kagu
 
       def search(query)
         @last_query = query
-        return klass unless query.present?
+        return klass if query.blank? || !query_map.keys.include?(
+          *query.keys.map(&:to_s)
+        )
         
-        query.map { |q, a| klass.send(q, a).records }.reduce(:merge)
+        query.map { |q, a| klass.search(query_map[q].call(a)).records }
+          .reduce(:merge)
+      end
+
+      private
+
+      def query_map
+        @query_map ||= {
+          tags: Tags::TAG_QUERY
+        }.with_indifferent_access
       end
     end
   end

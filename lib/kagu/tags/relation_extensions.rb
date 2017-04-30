@@ -27,12 +27,6 @@ module Kagu
           has_many :tag_mappings, as: :kindable
         end
       end
-
-      class_methods do
-        def by_tags(tag_string)
-          search(Tags::TAG_QUERY.call(tag_string)).records
-        end
-      end
     end
   end
 end

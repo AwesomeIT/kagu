@@ -33,7 +33,7 @@ module Kagu
       end
 
       def valid?(query)
-        query.present? || query_map.keys.include?(*query.keys)
+        query.present? || query.keys.all? { |k| query_map.key?(k) }
       end
     end
   end

@@ -1,5 +1,5 @@
 # kagu
-![CircleCI](https://circleci.com/gh/AwesomeIT/kagu.svg?style=shield&circle-token=e69669e5ebd800aeeb50f55612d1a49e77120a57)
+![CircleCI](https://circleci.com/gh/AwesomeIT/kagu.svg?style=shield&circle-token=3420189707d859bb6fcd91a354a6ffcea697e1ff)
 [![Code Climate](https://codeclimate.com/github/AwesomeIT/kagu/badges/gpa.svg)](https://codeclimate.com/github/AwesomeIT/kagu)
 
 Standard library of models and utilities for the [turaco](https://github.com/birdfeed/turaco) API and [myna](https://github.com/birdfeed/myna) Kafka-backed workers.

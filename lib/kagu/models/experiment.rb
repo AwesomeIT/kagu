@@ -2,7 +2,13 @@
 module Kagu
   module Models
     class Experiment < ApplicationRecord
-      include Tags::Taggable
+      include Extensions::Taggable
+      include Extensions::Searchable
+
+      searchable do
+        fields :name
+        relation :tags, :tag_strings, :string
+      end
 
       belongs_to :user
       has_many :scores

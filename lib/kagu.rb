@@ -11,6 +11,7 @@ module Kagu
   autoload :Models
   autoload :Tags
   autoload :Query
+  autoload :Search
 
   class << self
     def root

@@ -3,9 +3,7 @@ module Kagu
   module Query
     class Elastic
       class << self
-        def for(klass)
-          new(klass)
-        end
+        alias for new
       end
 
       attr_reader :klass, :last_query
@@ -28,6 +26,7 @@ module Kagu
 
       def query_map
         @query_map ||= {
+          name: Tags::TAG_QUERY,
           tags: Tags::TAG_QUERY
         }.with_indifferent_access
       end

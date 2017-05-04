@@ -4,6 +4,7 @@ module Kagu
     extend ActiveSupport::Autoload
 
     autoload :ActiveModelConfigurator
+    autoload :Exceptions
     autoload :IndexSettings
   end
 end

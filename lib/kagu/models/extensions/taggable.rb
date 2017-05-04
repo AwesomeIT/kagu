@@ -5,14 +5,20 @@ module Kagu
       module Taggable
         extend ActiveSupport::Concern
 
-        # Needed to not break ES
-        def as_indexed_json(_options = {})
-          as_json.merge(tags: tags.pluck(:name))
+        def tag_strings
+          tags.pluck(:name).join(' ')
         end
 
         included do |other|
           relation_name = other.name.demodulize.underscore.pluralize.to_sym
           Models::Tag.taggable_kinds[relation_name] = other
+
+          Models::Tag.class_eval do
+            has_many relation_name,
+                     through: :tag_mappings,
+                     source: :kindable,
+                     source_type: other
+          end
 
           other.class_eval do
             has_many :tags, as: :kindable, through: :tag_mappings do
@@ -34,13 +40,6 @@ module Kagu
             end
 
             has_many :tag_mappings, as: :kindable
-          end
-
-          Models::Tag.class_eval do
-            has_many relation_name,
-                     through: :tag_mappings,
-                     source: :kindable,
-                     source_type: other
           end
         end
       end

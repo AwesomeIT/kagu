@@ -13,12 +13,14 @@ module Kagu
             include Elasticsearch::Model
 
             @elasticsearch_configurator = configurator
-            
+
             class << self
               extend Forwardable
               def_delegators :@elasticsearch_configurator,
                              :fields,
                              :searchable
+
+              attr_reader :elasticsearch_configurator
             end
           end
         end

@@ -6,7 +6,7 @@ module Kagu
       include Extensions::Searchable
 
       searchable do
-        fields :name
+        attributes :name
         relation :tags, :tag_strings, :string
       end
 

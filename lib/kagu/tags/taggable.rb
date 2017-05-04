@@ -28,10 +28,6 @@ module Kagu
                    source_type: other
         end
       end
-
-      def as_indexed_json(_options = {})
-        as_json.merge(tags: tags.pluck(:name))
-      end
     end
   end
 end

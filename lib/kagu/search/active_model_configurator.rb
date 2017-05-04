@@ -8,73 +8,77 @@ module Kagu
         @klass = klass
       end
 
-      def fields(*args)
-        attributes.push(*args.map(&:to_s))
+      def attributes(*args)
+        zipped = args.map(&:to_s)
+                     .zip(Array.new(args.length, resolve_from_ar: true))
+        fields.merge!(Hash[zipped])
+      end
+
+      def serializable_relations(ref)
+        Hash[fields.select { |_, v| v.key?(:getter) }
+                   .map { |k, v| [k, ref.send(v[:getter])] }]
       end
 
       def relation(assoc, data_method, type)
-        relations[assoc] = { getter: data_method, type: type }
+        fields[assoc.to_s] = { getter: data_method, type: type }
       end
 
       def searchable(&block)
-        self.instance_eval(&block)
+        instance_eval(&block)
         configure
-      end
-
-      def serializable_relations
-        @serializable_relations ||= relations.map { |k, v| [k, v[:getter]] }
       end
 
       private
 
       attr_reader :klass
 
-      def attributes
-        @attributes ||= []
+      def attribute_type(aname, _)
+        raise Exceptions::InvalidAttributeError, 'No attribute '\
+          "#{aname} on #{klass.name}!" unless klass.columns_hash.key?(aname)
+        klass.columns_hash[aname].type
       end
 
       def configure
-        klass.class_exec(map_attributes.merge(map_relations)) do |config|
-          settings Kagu::Search::IndexSettings::BASE_INDEX do 
+        klass.class_exec(mapped_fields) do |config|
+          settings Kagu::Search::IndexSettings::BASE_INDEX do
             mappings dynamic: 'false' do
-              config.each_pair { |i, a| indexes i, a } 
+              config.each_pair { |i, a| indexes i, a }
             end
           end
         end
 
-        # klass.send(:define_method, :as_indexed_json) do 
-        #   as_json.merge(
-        #     @elasticsearch_configurator
-        #       .serializable_relations
-        #       .map { |k, v| [k, send(v)] }
-        #   ) 
-        # end
-      end
-
-      
-
-      def map_attributes
-        @map_attributes ||= attributes.inject({}) do |m, a|
-          raise Exceptions::InvalidAttributeError, 'No attribute '\
-            "#{a} on #{klass.name}!" unless klass.columns_hash.key?(a)
-
-          type = klass.columns_hash[a].type
-
-          raise Exceptions::MissingTypeSetting, 'No mapping settings defined '\
-            "for type #{type}!" unless type_settings.key?(type)
-
-          m[a] = type_settings[type].merge(type: type)
-          m
+        klass.send(:define_method, :as_indexed_json) do
+          as_json.merge(
+            self.class.elasticsearch_configurator.serializable_relations(self)
+          )
         end
       end
 
-      def map_relations
-        @map_relations ||= relations
-          .transform_values { |v| v.merge(type_settings[v[:type]]).except(:getter) }
+      def fields
+        @fields ||= {}
       end
 
-      def relations
-        @relations ||= {}
+      def mapped_fields
+        @map_fields ||= begin
+          mapped = fields.map do |fname, settings|
+            type = settings[:resolve_from_ar] ? :attribute_type : :relation_type
+            type = send(type, fname, settings)
+
+            raise Exceptions::MissingTypeSetting, 'No mapping settings defined'\
+              " for type #{type}!" unless type_settings.key?(type)
+
+            elastic_settings = { type: type }.merge(type_settings[type])
+
+            [fname, elastic_settings]
+          end
+          Hash[mapped]
+        end
+      end
+
+      def relation_type(rname, settings)
+        raise Exceptions::InvalidRelationError, 'No relation '\
+          "#{rname} on #{klass.name}!" unless klass.reflections.key?(rname)
+        settings[:type]
       end
 
       def type_settings

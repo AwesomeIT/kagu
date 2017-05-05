@@ -3,7 +3,9 @@ module Kagu
   module Query
     class Elastic
       class << self
-        alias for new
+        # rubocop:disable Style/Alias
+        alias_method :for, :new
+        # rubocop:enable Style/Alias
       end
 
       attr_reader :klass, :last_query

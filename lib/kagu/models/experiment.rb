@@ -7,7 +7,7 @@ module Kagu
 
       searchable do
         attributes :name
-        relation :tags, :tag_strings, :string
+        derived :tags, :tag_strings, :string
       end
 
       belongs_to :user

@@ -3,10 +3,11 @@ require 'spec_helper'
 describe Kagu::Query::Elastic do
   context '.for' do
     let(:klass) { String }
+    let(:new_instance) { described_class.for(klass) }
 
     it 'invokes new' do
-      expect(described_class).to receive(:new).with(klass)
-      described_class.for(String)
+      expect(new_instance).to be_a(Kagu::Query::Elastic)
+      expect(new_instance.klass).to eql(klass)
     end
   end
 

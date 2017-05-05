@@ -7,20 +7,20 @@ module Kagu
 
         included do |other|
           other.class_exec(
-            Kagu::Search::ActiveModelConfigurator.new(other)
+            Kagu::Search::ActiveModelMapper.new(other)
           ) do |configurator|
 
             include Elasticsearch::Model
 
-            @elasticsearch_configurator = configurator
+            @elasticsearch_mapper = configurator
 
             class << self
               extend Forwardable
-              def_delegators :@elasticsearch_configurator,
+              def_delegators :@elasticsearch_mapper,
                              :fields,
                              :searchable
 
-              attr_reader :elasticsearch_configurator
+              attr_reader :elasticsearch_mapper
             end
           end
         end

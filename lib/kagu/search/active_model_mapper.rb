@@ -3,40 +3,37 @@ require 'pry'
 
 module Kagu
   module Search
-    class ActiveModelConfigurator
+    class ActiveModelMapper
       def initialize(klass)
         @klass = klass
+        @fields = {}
       end
 
       def attributes(*args)
         zipped = args.map(&:to_s)
-                     .zip(Array.new(args.length, resolve_from_ar: true))
+                     .zip(Array.new(args.length, _mapper_type: :attribute))
         fields.merge!(Hash[zipped])
       end
 
-      def serializable_relations(ref)
+      def derived_as_json(instance)
         Hash[fields.select { |_, v| v.key?(:getter) }
-                   .map { |k, v| [k, ref.send(v[:getter])] }]
+                   .map    { |k, v| [k, instance.send(v[:getter])] }]
       end
 
-      def relation(assoc, data_method, type)
-        fields[assoc.to_s] = { getter: data_method, type: type }
+      def derived(fname, data_method, type)
+        fields[fname.to_s] = {
+          getter: data_method, type: type, _mapper_type: :derived
+        }
       end
 
       def searchable(&block)
         instance_eval(&block)
         configure
       end
-
+      
       private
 
-      attr_reader :klass
-
-      def attribute_type(aname, _)
-        raise Exceptions::InvalidAttributeError, 'No attribute '\
-          "#{aname} on #{klass.name}!" unless klass.columns_hash.key?(aname)
-        klass.columns_hash[aname].type
-      end
+      attr_reader :fields, :klass
 
       def configure
         klass.class_exec(mapped_fields) do |config|
@@ -49,36 +46,36 @@ module Kagu
 
         klass.send(:define_method, :as_indexed_json) do
           as_json.merge(
-            self.class.elasticsearch_configurator.serializable_relations(self)
+            self.class.elasticsearch_mapper.serializable_relations(self)
           )
         end
-      end
-
-      def fields
-        @fields ||= {}
       end
 
       def mapped_fields
         @map_fields ||= begin
           mapped = fields.map do |fname, settings|
-            type = settings[:resolve_from_ar] ? :attribute_type : :relation_type
-            type = send(type, fname, settings)
+            type = store_adapter.send(
+              "#{settings[:_mapper_type]}_type", klass, fname, settings
+            )
 
             raise Exceptions::MissingTypeSetting, 'No mapping settings defined'\
               " for type #{type}!" unless type_settings.key?(type)
 
             elastic_settings = { type: type }.merge(type_settings[type])
-
             [fname, elastic_settings]
           end
           Hash[mapped]
         end
       end
 
-      def relation_type(rname, settings)
-        raise Exceptions::InvalidRelationError, 'No relation '\
-          "#{rname} on #{klass.name}!" unless klass.reflections.key?(rname)
-        settings[:type]
+      def store_adapter
+        @store_adapter ||=
+          if klass < ActiveRecord::Base
+            StoreAdapters::ActiveRecord
+          else
+            raise Exceptions::MissingStoreAdapter, 'You must define a '\
+              "StoreAdapter for your ORM for #{klass.superclass.name}."
+          end
       end
 
       def type_settings

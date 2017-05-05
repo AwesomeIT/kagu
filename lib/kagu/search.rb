@@ -3,8 +3,9 @@ module Kagu
   module Search
     extend ActiveSupport::Autoload
 
-    autoload :ActiveModelConfigurator
+    autoload :ActiveModelMapper
     autoload :Exceptions
     autoload :IndexSettings
+    autoload :StoreAdapters
   end
 end

@@ -32,31 +32,32 @@ describe Kagu::Search::StoreAdapters::ActiveRecord do
     end
   end
 
-  context '.relation_type' do 
-    let(:relation) { 'bar' }
-    let(:reflections) { { 'bar' => double } }
+  # Deprecated feature because it made no sense
+  # context '.relation_type' do 
+  #   let(:relation) { 'bar' }
+  #   let(:reflections) { { 'bar' => double } }
 
-    let(:user_settings) { { type: 'string'} }
+  #   let(:user_settings) { { type: 'string'} }
 
-    it 'should invoke the correct methods' do
-      allow(klass).to receive(:reflections).and_return(reflections)
+  #   it 'should invoke the correct methods' do
+  #     allow(klass).to receive(:reflections).and_return(reflections)
 
-      expect(klass).to receive_message_chain(
-        :reflections, :key?).with(relation).and_call_original
+  #     expect(klass).to receive_message_chain(
+  #       :reflections, :key?).with(relation).and_call_original
 
-      expect(user_settings).to receive(:[]).with(:type).and_call_original
+  #     expect(user_settings).to receive(:[]).with(:type).and_call_original
 
-      expect(
-        described_class.relation_type(klass, relation, user_settings)
-      ).to eql('string')
-    end
+  #     expect(
+  #       described_class.relation_type(klass, relation, user_settings)
+  #     ).to eql('string')
+  #   end
 
-    it 'should raise an exception for non existing relations' do
-      allow(klass).to receive_message_chain(
-        :reflections, :key?).with(relation).and_return(false)
+  #   it 'should raise an exception for non existing relations' do
+  #     allow(klass).to receive_message_chain(
+  #       :reflections, :key?).with(relation).and_return(false)
 
-      expect { described_class.relation_type(klass, relation, user_settings) }
-        .to raise_error(Kagu::Search::Exceptions::InvalidRelationError)
-    end
-  end
+  #     expect { described_class.relation_type(klass, relation, user_settings) }
+  #       .to raise_error(Kagu::Search::Exceptions::InvalidRelationError)
+  #   end
+  # end
 end

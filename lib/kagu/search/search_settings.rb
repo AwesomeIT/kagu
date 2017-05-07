@@ -8,7 +8,6 @@ module Kagu
           query: input
         } } } }
       end
-      # rubocop:enable Style/MutableConstant
     end
   end
 end

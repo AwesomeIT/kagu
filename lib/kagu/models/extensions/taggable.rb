@@ -9,9 +9,9 @@ module Kagu
           tags.pluck(:name).join(' ')
         end
 
-        TAG_EXT_LAMBDA = lambda do |mod, m, t|
+        TAG_EXT_LAMBDA = lambda do |mode, model, m, t|
           tag = Tag.find_or_create_by(name: t.downcase.strip)
-          next m if mod && include?(tag)
+          next m if mode && model.include?(tag)
           m << tag
         end
 
@@ -30,13 +30,13 @@ module Kagu
             has_many :tags, as: :kindable, through: :tag_mappings do
               def <<(other)
                 super(Array.wrap(other).inject(
-                  [], &Taggable::TAG_EXT_LAMBDA.curry[true]
+                  [], &Taggable::TAG_EXT_LAMBDA.curry[true, self]
                 ))
               end
 
               def >>(other)
                 delete(Array.wrap(other).inject(
-                         [], &Taggable::TAG_EXT_LAMBDA.curry[false]
+                         [], &Taggable::TAG_EXT_LAMBDA.curry[false, self]
                 ))
               end
             end

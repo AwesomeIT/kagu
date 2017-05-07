@@ -9,8 +9,8 @@ module Kagu
   autoload :Adapters
   autoload :Bootstrap
   autoload :Models
-  autoload :Tags
   autoload :Query
+  autoload :Search
 
   class << self
     def root

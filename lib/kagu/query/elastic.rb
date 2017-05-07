@@ -3,9 +3,9 @@ module Kagu
   module Query
     class Elastic
       class << self
-        def for(klass)
-          new(klass)
-        end
+        # rubocop:disable Style/Alias
+        alias_method :for, :new
+        # rubocop:enable Style/Alias
       end
 
       attr_reader :klass, :last_query
@@ -20,7 +20,7 @@ module Kagu
 
         return klass unless valid?(query)
 
-        query.map { |q, a| klass.search(query_map[q].call(a)).records }
+        query.map { |q, a| klass.search(query_map[q].call(a)).records.records }
              .reduce(:merge)
       end
 
@@ -28,7 +28,8 @@ module Kagu
 
       def query_map
         @query_map ||= {
-          tags: Tags::TAG_QUERY
+          name: Search::SearchSettings::NGRAM_QUERY.curry[:name],
+          tags: Search::SearchSettings::NGRAM_QUERY.curry[:tags]
         }.with_indifferent_access
       end
 

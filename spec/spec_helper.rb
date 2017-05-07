@@ -1,7 +1,8 @@
 # frozen_string_literal: true
+ENV['KAGU_TEST'] = 'yes'
+
 require 'kagu'
 require 'pry'
-
 require "simplecov"
 SimpleCov.start
 

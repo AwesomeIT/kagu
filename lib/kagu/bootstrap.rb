@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 require 'singleton'
+require 'yaml'
+require 'pry'
 
 module Kagu
   class Bootstrap
@@ -7,7 +9,13 @@ module Kagu
 
     def self.bootstrap
       instance.configure_elasticsearch_client
+      instance.test_connection if ENV.key?('KAGU_TEST')
       instance.link_activerecord_models
+    end
+
+    def test_connection
+      conn_info = YAML.load_file("#{Kagu.root}/db/config.yml")
+      ActiveRecord::Base.establish_connection(conn_info['test'])
     end
 
     def configure_elasticsearch_client

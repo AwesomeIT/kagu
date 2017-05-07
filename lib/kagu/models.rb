@@ -3,6 +3,8 @@ module Kagu
   module Models
     extend ActiveSupport::Autoload
 
+    autoload :Extensions
+
     autoload :ApplicationRecord
     autoload :Experiment
     autoload :Organization

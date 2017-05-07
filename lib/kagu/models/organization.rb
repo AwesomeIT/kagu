@@ -2,7 +2,13 @@
 module Kagu
   module Models
     class Organization < ApplicationRecord
-      include Tags::Taggable
+      include Extensions::Taggable
+      include Extensions::Searchable
+
+      searchable do
+        attributes :name
+        derived :tags, :tag_strings, :string
+      end
 
       has_many :organization_mappings
 

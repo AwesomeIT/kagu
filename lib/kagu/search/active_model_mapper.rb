@@ -30,7 +30,7 @@ module Kagu
         instance_eval(&block)
         configure
       end
-      
+
       private
 
       attr_reader :fields, :klass

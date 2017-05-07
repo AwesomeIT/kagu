@@ -4,7 +4,7 @@ module Kagu
     module StoreAdapters
       class Base
         class << self
-          def attribute_type(klass, aname, _ = nil)
+          def attribute_type(_klass, _aname, _ = nil)
             raise NotImplementedError
           end
 

@@ -11,6 +11,7 @@ module Kagu
       end
 
       belongs_to :user
+      
       has_many :scores
       has_and_belongs_to_many :samples
 

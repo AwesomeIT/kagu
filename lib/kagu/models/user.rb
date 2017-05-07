@@ -5,7 +5,12 @@ module Kagu
   module Models
     class User < ApplicationRecord
       extend Devise::Models
-      include Tags::Taggable
+      include Extensions::Taggable
+      include Extensions::Searchable
+
+      searchable do
+        derived :tags, :tag_strings, :string
+      end
 
       # Include default devise modules. Others available are:
       # :confirmable, :lockable, :timeoutable and :omniauthable

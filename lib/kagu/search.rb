@@ -6,6 +6,7 @@ module Kagu
     autoload :ActiveModelMapper
     autoload :Exceptions
     autoload :IndexSettings
+    autoload :SearchSettings
     autoload :StoreAdapters
   end
 end

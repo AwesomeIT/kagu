@@ -4,8 +4,8 @@ module Kagu
     module Extensions
       extend ActiveSupport::Autoload
 
-      autoload :Taggable
       autoload :Searchable
+      autoload :Taggable
     end
   end
 end

@@ -28,8 +28,8 @@ module Kagu
 
       def query_map
         @query_map ||= {
-          name: Tags::TAG_QUERY,
-          tags: Tags::TAG_QUERY
+          name: Search::SearchSettings::NGRAM_QUERY,
+          tags: Search::SearchSettings::NGRAM_QUERY
         }.with_indifferent_access
       end
 

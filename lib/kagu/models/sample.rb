@@ -2,7 +2,13 @@
 module Kagu
   module Models
     class Sample < ApplicationRecord
-      include Tags::Taggable
+      include Extensions::Taggable
+      include Extensions::Searchable
+
+      searchable do
+        attributes :name
+        derived :tags, :tag_strings, :string
+      end
 
       belongs_to :user
       has_many :scores

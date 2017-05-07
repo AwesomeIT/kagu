@@ -9,6 +9,12 @@ module Kagu
           tags.pluck(:name).join(' ')
         end
 
+        TAG_EXT_LAMBDA = lambda do |mod, m, t|
+          tag = Tag.find_or_create_by(name: t.downcase.strip)
+          next m if mod && include?(tag)
+          m << tag
+        end
+
         included do |other|
           relation_name = other.name.demodulize.underscore.pluralize.to_sym
           Models::Tag.taggable_kinds[relation_name] = other
@@ -23,19 +29,15 @@ module Kagu
           other.class_eval do
             has_many :tags, as: :kindable, through: :tag_mappings do
               def <<(other)
-                super(Array.wrap(other).inject([]) do |m, t|
-                  tag = Tag.find_or_create_by(name: t.downcase.strip)
-                  next m if include?(tag)
-                  m << tag
-                end)
+                super(Array.wrap(other).inject(
+                  [], &Taggable::TAG_EXT_LAMBDA.curry[true]
+                ))
               end
 
               def >>(other)
-                delete(Array.wrap(other).inject([]) do |m, t|
-                  tag = Tag.find_or_create_by(name: t.downcase.strip)
-                  next m unless include?(tag)
-                  m << tag
-                end)
+                delete(Array.wrap(other).inject(
+                         [], &Taggable::TAG_EXT_LAMBDA.curry[false]
+                ))
               end
             end
 

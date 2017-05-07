@@ -44,9 +44,9 @@ module Kagu
           end
         end
 
-        klass.send(:define_method, :as_indexed_json) do
+        klass.send(:define_method, :as_indexed_json) do |_args|
           as_json.merge(
-            self.class.elasticsearch_mapper.serializable_relations(self)
+            self.class.elasticsearch_mapper.derived_as_json(self)
           )
         end
       end

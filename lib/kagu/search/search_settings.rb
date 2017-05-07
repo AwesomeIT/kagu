@@ -3,9 +3,9 @@ module Kagu
   module Search
     module SearchSettings
       # elasticsearch-model does not like immutable Hashes
-      NGRAM_QUERY = lambda do |tag_string|
-        { query: { match: { tags: {
-          query: tag_string
+      NGRAM_QUERY = lambda do |field, input|
+        { query: { match: { field => {
+          query: input
         } } } }
       end
       # rubocop:enable Style/MutableConstant

@@ -20,7 +20,7 @@ module Kagu
 
         return klass unless valid?(query)
 
-        query.map { |q, a| klass.search(query_map[q].call(a)).records }
+        query.map { |q, a| klass.search(query_map[q].call(a)).records.records }
              .reduce(:merge)
       end
 
@@ -28,8 +28,8 @@ module Kagu
 
       def query_map
         @query_map ||= {
-          name: Search::SearchSettings::NGRAM_QUERY,
-          tags: Search::SearchSettings::NGRAM_QUERY
+          name: Search::SearchSettings::NGRAM_QUERY.curry[:name],
+          tags: Search::SearchSettings::NGRAM_QUERY.curry[:tags]
         }.with_indifferent_access
       end
 

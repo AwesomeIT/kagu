@@ -1,6 +1,22 @@
 describe Kagu::Adapters::S3 do
 
   context 'with stubbed bucket' do
+    context '.object_by_key' do
+      let(:key) { 'foobar.avi' }
+      let(:bucket) { Aws::S3::Bucket.new(name: 'foo', region: 'test') }
+      let(:object) { double }
+
+      it 'calls the correct methods' do
+        expect_any_instance_of(described_class).to receive(:bucket)
+          .and_return(bucket)
+        expect(bucket).to receive(:object).with(key).and_return(object)
+        expect(object).to receive(:get).and_return true
+      end
+
+      after { described_class.object_by_key(key) }
+    end
+
+
     context '.upload_file' do
       let(:temp_file) { Tempfile.new('foo').tap { |f| f.write('hi') } }
       let(:filename) { 'foo.txt' }
@@ -27,7 +43,6 @@ describe Kagu::Adapters::S3 do
 
         expect_any_instance_of(Aws::S3::Object)
           .to receive(:upload_file).with(temp_file.path)
-          .and_return(self)
       end
     end
 

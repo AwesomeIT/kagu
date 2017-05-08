@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require 'aws-sdk'
+require 'securerandom'
 
 module Kagu
   module Adapters
@@ -17,7 +18,8 @@ module Kagu
       end
 
       def upload_file(path, file_name)
-        obj = bucket.object(file_name)
+        uuid = SecureRandom.uuid + '.' + file_name.split('.').last
+        obj = bucket.object(uuid)
         obj.upload_file(path)
         obj.public_url
       end

@@ -28,9 +28,6 @@ describe Kagu::Adapters::S3 do
         expect_any_instance_of(Aws::S3::Object)
           .to receive(:upload_file).with(temp_file.path)
           .and_return(self)
-
-        expect_any_instance_of(Aws::S3::Object)
-          .to receive(:public_url)
       end
     end
 

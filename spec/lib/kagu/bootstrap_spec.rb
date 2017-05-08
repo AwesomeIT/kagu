@@ -7,12 +7,12 @@ RSpec.describe Kagu::Bootstrap do
 
     context '#link_activerecord_models' do 
       it 'should class alias all top level models' do
-        expect(Object.constants).to include(*Kagu::Models.constants)
-      end
-
-      it 'should have class types' do
-        expect { Kagu::Models.constants.map { |c| c.to_s.constantize } }
-          .to_not raise_error
+        expect(Object.constants).to include(
+          *Kagu::Models.constants.inject([]) do |m, i|
+            m << i if Kagu::Models.const_get(i) < ActiveRecord::Base
+            m
+          end
+        )
       end
     end
   end

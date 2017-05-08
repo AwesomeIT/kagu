@@ -19,9 +19,7 @@ module Kagu
 
       def upload_file(path, file_name)
         uuid = SecureRandom.uuid + '.' + file_name.split('.').last
-        obj = bucket.object(uuid)
-        obj.upload_file(path)
-        obj.public_url
+        bucket.object(uuid).tap { |o| o.upload_file(path) }
       end
 
       private

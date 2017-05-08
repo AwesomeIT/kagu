@@ -27,7 +27,9 @@ module Kagu
 
     def link_activerecord_models
       Kagu::Models.constants.each do |klass|
-        Object.const_set(klass.to_s, "Kagu::Models::#{klass}".constantize)
+        const = "Kagu::Models::#{klass}".constantize
+        next unless const < ActiveRecord::Base
+        Object.const_set(klass.to_s, const)
       end
     end
   end

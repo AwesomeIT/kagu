@@ -5,6 +5,8 @@ describe Kagu::Adapters::S3 do
       let(:temp_file) { Tempfile.new('foo').tap { |f| f.write('hi') } }
       let(:filename) { 'foo.txt' }
 
+      let(:random_hash) { 'foo123' }
+
       after { described_class.upload_file(temp_file.path, filename) }
 
       it 'should invoke the correct methods' do
@@ -14,11 +16,13 @@ describe Kagu::Adapters::S3 do
             Aws::S3::Bucket.new(name: 'foo', region: 'test')
           )
 
+        expect(SecureRandom).to receive(:uuid).and_return(random_hash)
+
         expect_any_instance_of(Aws::S3::Bucket)
           .to receive(:object)
-          .with(filename)
+          .with("#{random_hash}.txt")
           .and_return(Aws::S3::Object.new(
-            bucket_name: 'foo', key: filename, region: 'us-east-1'
+            bucket_name: 'foo', key: "#{random_hash}.txt", region: 'us-east-1'
           ))
 
         expect_any_instance_of(Aws::S3::Object)

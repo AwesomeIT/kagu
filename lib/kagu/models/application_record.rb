@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Kagu
   module Models
     class ApplicationRecord < ActiveRecord::Base

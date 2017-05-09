@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Kagu
   module Search
     module IndexSettings
@@ -10,14 +11,14 @@ module Kagu
             type: 'edgeNGram',
             min_gram: '2',
             max_gram: '10',
-            token_chars: %w(letter digit symbol)
+            token_chars: %w[letter digit symbol]
           }
         },
         analyzer: {
           edge_ngram_analyzer: {
             type: 'custom',
             tokenizer: 'standard',
-            filter: %w(lowercase edge_ngram_filter)
+            filter: %w[lowercase edge_ngram_filter]
           }
         }
       } }

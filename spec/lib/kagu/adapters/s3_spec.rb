@@ -1,48 +1,44 @@
 describe Kagu::Adapters::S3 do
 
   context 'with stubbed bucket' do
-    context '.object_by_key' do
-      let(:key) { 'foobar.avi' }
-      let(:bucket) { Aws::S3::Bucket.new(name: 'foo', region: 'test') }
-      let(:object) { double }
+    let(:bucket) { double }
+    let(:object) { double }
 
-      it 'calls the correct methods' do
-        expect_any_instance_of(described_class).to receive(:bucket)
-          .and_return(bucket)
-        expect(bucket).to receive(:object).with(key).and_return(object)
-        expect(object).to receive(:get).and_return true
+    before(:example) do
+      %i(@bucket @resource).each do |v|
+        described_class.instance.instance_variable_set(v, nil)
       end
 
-      after { described_class.object_by_key(key) }
+      expect_any_instance_of(Aws::S3::Resource)
+        .to receive(:bucket).at_most(:once)
+        .and_return(bucket)
     end
 
+    context '.object_by_key' do
+      let(:key) { 'foobar.avi' }
+
+      after { described_class.object_by_key(key) }
+
+      it 'calls the correct methods' do
+        expect(bucket).to receive(:object).with(key).and_return(object)
+      end
+    end
 
     context '.upload_file' do
       let(:temp_file) { Tempfile.new('foo').tap { |f| f.write('hi') } }
       let(:filename) { 'foo.txt' }
-
-      let(:random_hash) { 'foo123' }
+      let(:random_hash) { 'bar123' }
 
       after { described_class.upload_file(temp_file.path, filename) }
 
       it 'should invoke the correct methods' do
-        expect_any_instance_of(Aws::S3::Resource)
-          .to receive(:bucket).at_most(:once)
-          .and_return(
-            Aws::S3::Bucket.new(name: 'foo', region: 'test')
-          )
-
         expect(SecureRandom).to receive(:uuid).and_return(random_hash)
 
-        expect_any_instance_of(Aws::S3::Bucket)
-          .to receive(:object)
+        expect(bucket).to receive(:object)
           .with("#{random_hash}.txt")
-          .and_return(Aws::S3::Object.new(
-            bucket_name: 'foo', key: "#{random_hash}.txt", region: 'us-east-1'
-          ))
+          .and_return(object)
 
-        expect_any_instance_of(Aws::S3::Object)
-          .to receive(:upload_file).with(temp_file.path)
+        expect(object).to receive(:upload_file).with(temp_file.path)
       end
     end
 
@@ -52,15 +48,8 @@ describe Kagu::Adapters::S3 do
       after { described_class.file_to_buffer(s3_url) }
 
       it 'should invoke the correct methods' do 
-        expect_any_instance_of(Aws::S3::Bucket)
-          .to receive(:object)
-          .with(s3_url)
-          .and_return(Aws::S3::Object.new(
-            bucket_name: 'foo', key: s3_url, region: 'us-east-1'
-          ))
-
-        expect_any_instance_of(Aws::S3::Object)
-          .to receive(:get)
+        expect(bucket).to receive(:object).with(s3_url).and_return(object)
+        expect(object).to receive(:get)
       end
     end
   end

@@ -20,12 +20,12 @@ module Kagu
       end
 
       def object_by_key(key)
-        bucket.object(key).get
+        bucket.object(key)
       end
 
       def upload_file(path, file_name)
-        uuid = SecureRandom.uuid + '.' + file_name.split('.').last
-        bucket.object(uuid).tap { |o| o.upload_file(path) }
+        bucket.object("#{SecureRandom.uuid}.#{file_name.split('.').last}")
+              .tap { |o| o.upload_file(path) }
       end
 
       private

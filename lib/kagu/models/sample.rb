@@ -5,6 +5,8 @@ module Kagu
       include Extensions::Taggable
       include Extensions::Searchable
 
+      attr_accessor :private_url
+
       searchable do
         attributes :name
         derived :tags, :tag_strings, :string

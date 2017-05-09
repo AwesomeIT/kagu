@@ -9,19 +9,23 @@ module Kagu
 
       class << self
         extend Forwardable
-        def_delegators :instance, :file_to_buffer, :upload_file
+        def_delegators :instance,
+                       :file_to_buffer, :upload_file, :object_by_key
       end
 
+      # TODO: deprecate this
       def file_to_buffer(s3_url)
         object_output = bucket.object(s3_url).get
         object_output.body if object_output.present?
       end
 
+      def object_by_key(key)
+        bucket.object(key)
+      end
+
       def upload_file(path, file_name)
-        uuid = SecureRandom.uuid + '.' + file_name.split('.').last
-        obj = bucket.object(uuid)
-        obj.upload_file(path)
-        obj.public_url
+        bucket.object("#{SecureRandom.uuid}.#{file_name.split('.').last}")
+              .tap { |o| o.upload_file(path) }
       end
 
       private

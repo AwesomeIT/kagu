@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170501012937) do
+ActiveRecord::Schema.define(version: 20170508021853) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -104,11 +104,11 @@ ActiveRecord::Schema.define(version: 20170501012937) do
   create_table "samples", force: :cascade do |t|
     t.integer "user_id"
     t.string  "name",       default: "", null: false
-    t.string  "s3_url",     default: "", null: false
+    t.string  "s3_key",     default: "", null: false
     t.string  "low_label"
     t.string  "high_label"
     t.string  "hypothesis"
-    t.index ["s3_url"], name: "index_samples_on_s3_url", unique: true, using: :btree
+    t.index ["s3_key"], name: "index_samples_on_s3_key", unique: true, using: :btree
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
   end
 

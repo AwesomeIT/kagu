@@ -17,7 +17,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('activerecord')
   gem.add_dependency('activesupport')
   gem.add_dependency('aws-sdk')
-  gem.add_dependency('devise')
+  gem.add_dependency('devise', '4.2.1')
   gem.add_dependency('elasticsearch-model')
   gem.add_dependency('pg')
   gem.add_dependency('rake')

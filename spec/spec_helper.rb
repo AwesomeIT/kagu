@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 ENV['KAGU_TEST'] = 'yes'
+ENV['RAILS_ENV'] = 'NOT RAILS'
 
 require 'kagu'
 require 'pry'

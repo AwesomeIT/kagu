@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Kagu
   module Models
     class Sample < ApplicationRecord
@@ -6,7 +7,9 @@ module Kagu
       include Extensions::Searchable
 
       def private_url
-        return unless s3_key.present?
+        return if s3_key.blank? || ENV.fetch('RAILS_ENV', '')
+                                      .include?('test')
+
         Kagu::Adapters::S3.object_by_key(s3_key)
                           .presigned_url(:get, expires_in: 3600)
       end

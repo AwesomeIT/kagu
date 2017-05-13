@@ -10,16 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508021853) do
+ActiveRecord::Schema.define(version: 20170513154549) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "experiments", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "name",    default: "",    null: false
-    t.integer "repeats", default: 0,     null: false
-    t.boolean "active",  default: false
+    t.integer  "user_id"
+    t.string   "name",       default: "",    null: false
+    t.integer  "repeats",    default: 0,     null: false
+    t.boolean  "active",     default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
     t.index ["user_id"], name: "index_experiments_on_user_id", using: :btree
   end
 
@@ -102,12 +104,14 @@ ActiveRecord::Schema.define(version: 20170508021853) do
   end
 
   create_table "samples", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "name",       default: "", null: false
-    t.string  "s3_key",     default: "", null: false
-    t.string  "low_label"
-    t.string  "high_label"
-    t.string  "hypothesis"
+    t.integer  "user_id"
+    t.string   "name",       default: "", null: false
+    t.string   "s3_key",     default: "", null: false
+    t.string   "low_label"
+    t.string   "high_label"
+    t.string   "hypothesis"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.index ["s3_key"], name: "index_samples_on_s3_key", unique: true, using: :btree
     t.index ["user_id"], name: "index_samples_on_user_id", using: :btree
   end

@@ -14,12 +14,6 @@ module Kagu
                        :file_to_buffer, :upload_file, :object_by_key
       end
 
-      # TODO: deprecate this
-      def file_to_buffer(s3_url)
-        object_output = bucket.object(s3_url).get
-        object_output.body if object_output.present?
-      end
-
       def object_by_key(key)
         bucket.object(key)
       end

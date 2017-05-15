@@ -41,16 +41,5 @@ describe Kagu::Adapters::S3 do
         expect(object).to receive(:upload_file).with(temp_file.path)
       end
     end
-
-    context '.file_to_buffer' do
-      let(:s3_url) { 'foo/bar/baz.avi' }
-
-      after { described_class.file_to_buffer(s3_url) }
-
-      it 'should invoke the correct methods' do 
-        expect(bucket).to receive(:object).with(s3_url).and_return(object)
-        expect(object).to receive(:get)
-      end
-    end
   end
 end

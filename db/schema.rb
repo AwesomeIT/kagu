@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170515223537) do
+ActiveRecord::Schema.define(version: 20170517052215) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(version: 20170515223537) do
     t.integer "organization_id"
     t.index ["kindable_id", "kindable_type"], name: "index_organization_mappings_on_kindable_id_and_kindable_type", using: :btree
     t.index ["kindable_type", "kindable_id"], name: "index_organization_mappings_on_kindable_type_and_kindable_id", using: :btree
+    t.index ["organization_id", "kindable_type", "kindable_id"], name: "org_maps_org_id_kindable_unique", unique: true, using: :btree
     t.index ["organization_id"], name: "index_organization_mappings_on_organization_id", using: :btree
   end
 

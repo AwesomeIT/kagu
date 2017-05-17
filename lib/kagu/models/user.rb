@@ -28,7 +28,9 @@ module Kagu
 
       has_and_belongs_to_many :roles
 
-      has_many :organization_mappings, as: :kindable
+      has_many :organization_mappings, as: :kindable,
+                                       foreign_key: :kindable_id
+
       has_many :organizations, through: :organization_mappings
 
       # TODO: rename

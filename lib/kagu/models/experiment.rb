@@ -16,7 +16,7 @@ module Kagu
       has_many :scores
       has_and_belongs_to_many :samples
 
-      has_one :organization_mapping, as: :kindable
+      has_one :organization_mapping, as: :kindable, foreign_key: :kindable_id
       has_one :organization, through: :organization_mapping, dependent: :destroy
     end
   end

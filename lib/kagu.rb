@@ -3,12 +3,14 @@
 require 'active_support'
 require 'active_record'
 require 'elasticsearch/model'
+require 'karafka'
 
 module Kagu
   extend ActiveSupport::Autoload
 
   autoload :Adapters
   autoload :Bootstrap
+  autoload :Events
   autoload :Models
   autoload :Query
   autoload :Search

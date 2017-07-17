@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency('devise', '4.2.1')
   gem.add_dependency('elasticsearch-model')
   gem.add_dependency('pg')
+  gem.add_dependency('karafka')
   gem.add_dependency('rake')
 
   gem.add_development_dependency('codeclimate-test-reporter')

@@ -9,6 +9,7 @@ Standard library of models and utilities for the [turaco](https://github.com/bir
 | Namespace       | Purpose                                                                      |
 |-----------------|------------------------------------------------------------------------------|
 | Kagu::Adapters  | Connection adapters for third party services, e.g. AWS S3.                   |
+| Kagu::Events    | Kafka eventt producers.                                                      |
 | Kagu::Factories | FactoryGirl factories used in test environments. Not eager loaded!           |
 | Kagu::Models    | ActiveRecord models / persistence.                                           |
 | Kagu::Query     | Query-oriented service objects (e.g. stuff you shouldn't put in your model). |
